@@ -24,6 +24,9 @@ if st.button("分析開始"):
 
         prob = model.predict_proba(x)[0]
 
+        st.write("デバッグ用:")
+        st.write(prob)
+
         fake_prob = prob[0] * 100
         true_prob = prob[1] * 100
 
