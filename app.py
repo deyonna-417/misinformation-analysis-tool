@@ -52,6 +52,8 @@ if st.button("分析開始", type="primary"):
             st.write("デバッグ:")
             st.write(prob)
             st.write("特徴量数:", x.nnz)
+            st.write("予測確率:", prob)
+            st.write("特徴量数:", x.nnz)
 
             fake_prob = prob[0] * 100
             true_prob = prob[1] * 100
