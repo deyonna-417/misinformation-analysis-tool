@@ -50,7 +50,8 @@ if st.button("分析開始", type="primary"):
             prob = model.predict_proba(x)[0]
 
             st.write("デバッグ:")
-　　　　　　 st.write(prob)
+            st.write(prob)
+            st.write("特徴量数:", x.nnz)
 
             fake_prob = prob[0] * 100
             true_prob = prob[1] * 100
