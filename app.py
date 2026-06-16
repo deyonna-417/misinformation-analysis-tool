@@ -1,6 +1,9 @@
 import streamlit as st
 import joblib
 
+import requests
+from bs4 import BeautifulSoup
+
 # =========================
 # モデル読み込み
 # =========================
@@ -26,11 +29,58 @@ st.caption(
 
 st.write("ニュース記事やSNS投稿を入力してください")
 
-text = st.text_area(
-    "入力欄",
-    height=250,
-    placeholder="ここに記事本文やSNS投稿を貼り付けてください"
+mode = st.radio(
+    "入力方法",
+    ["テキスト入力", "URL入力"]
 )
+
+text = ""
+
+if mode == "テキスト入力":
+
+    text = st.text_area(
+        "入力欄",
+        height=250
+    )
+
+else:
+
+    url = st.text_input(
+        "記事URLを入力"
+    )
+
+    if url:
+
+        try:
+
+            response = requests.get(
+                url,
+                timeout=10
+            )
+
+            soup = BeautifulSoup(
+                response.text,
+                "html.parser"
+            )
+
+            text = soup.get_text(
+                " ",
+                strip=True
+            )
+
+            st.success("記事を取得しました")
+
+            st.text_area(
+                "取得した本文（先頭1000文字）",
+                text[:1000],
+                height=200
+            )
+
+        except Exception as e:
+
+            st.error(
+                f"取得失敗: {e}"
+            )
 
 # =========================
 # 判定
@@ -49,9 +99,6 @@ if st.button("分析開始", type="primary"):
 
             prob = model.predict_proba(x)[0]
 
-            st.write("デバッグ:")
-            st.write(prob)
-            st.write("特徴量数:", x.nnz)
             st.write("予測確率:", prob)
             st.write("特徴量数:", x.nnz)
 
