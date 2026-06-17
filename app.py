@@ -97,19 +97,19 @@ if url:
 
 if st.button("分析開始", type="primary"):
 
-if text.strip() == "":
+    if text.strip() == "":
     st.warning("文章またはURLを入力してください")
 
-else:
+    else:
 
-    with st.spinner("AIが分析中です..."):
+        with st.spinner("AIが分析中です..."):
 
-        x = vectorizer.transform([text])
+            x = vectorizer.transform([text])
 
-        prob = model.predict_proba(x)[0]
+            prob = model.predict_proba(x)[0]
 
-        fake_prob = prob[0] * 100
-        true_prob = prob[1] * 100
+            fake_prob = prob[0] * 100
+            true_prob = prob[1] * 100
 
     if fake_prob >= 75:
         result = "False"
