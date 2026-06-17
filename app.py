@@ -165,36 +165,45 @@ if st.button("分析開始", type="primary"):
             "特徴語数",
             x.nnz
         )
-
+        
     # =========================
     # 検出特徴語
     # =========================
-
+    
     feature_names = vectorizer.get_feature_names_out()
-
-    indices = x.nonzero()[1]
-
-    detected_words = [
-        feature_names[i]
-        for i in indices
-    ]
-
+    
+    scores = x.toarray()[0]
+    
+    top_indices = scores.argsort()[-20:][::-1]
+    
+    important_words = []
+    
+    for idx in top_indices:
+    
+        if scores[idx] > 0:
+    
+            word = feature_names[idx]
+    
+            if (
+                len(word) >= 3
+                and not word.isdigit()
+            ):
+                important_words.append(word)
+    
     st.markdown("### 🔍 検出特徴語")
-
-    if len(detected_words) > 0:
-
-        st.write(
-            ", ".join(
-                detected_words[:20]
-            )
-        )
-
+    
+    if important_words:
+    
+        for word in important_words:
+    
+            st.write(f"• {word}")
+    
     else:
-
+    
         st.write(
             "特徴語が検出されませんでした"
         )
-
+                                                                
     # =========================
     # コメント
     # =========================
