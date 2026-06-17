@@ -45,16 +45,13 @@ text = ""
 
 if mode == "テキスト入力":
 
-```
 text = st.text_area(
     "ニュース記事やSNS投稿を入力してください",
     height=250
 )
-```
 
 else:
 
-```
 url = st.text_input(
     "記事URLを入力してください"
 )
@@ -91,7 +88,6 @@ if url:
         st.error(
             f"取得失敗: {e}"
         )
-```
 
 # =========================
 
@@ -101,7 +97,6 @@ if url:
 
 if st.button("分析開始", type="primary"):
 
-```
 if text.strip() == "":
     st.warning("文章またはURLを入力してください")
 
@@ -220,7 +215,6 @@ else:
         st.success(
             "一般ニュース記事に近い特徴が検出されました。"
         )
-```
 
 # =========================
 
