@@ -45,7 +45,7 @@ text = ""
 
 if mode == "テキスト入力":
 
-text = st.text_area(
+    text = st.text_area(
     "ニュース記事やSNS投稿を入力してください",
     height=250
 )
