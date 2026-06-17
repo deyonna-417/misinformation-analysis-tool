@@ -42,6 +42,7 @@ mode = st.radio(
 )
 
 text = ""
+url = ""
 
 if mode == "テキスト入力":
 
@@ -98,7 +99,7 @@ if url:
 if st.button("分析開始", type="primary"):
 
     if text.strip() == "":
-    st.warning("文章またはURLを入力してください")
+        st.warning("文章またはURLを入力してください")
 
     else:
 
