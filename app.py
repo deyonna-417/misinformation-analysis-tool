@@ -137,6 +137,49 @@ if st.button("分析開始", type="primary"):
 
         st.progress(fake_prob / 100)
 
+        # =========================
+# 分析サマリー
+# =========================
+
+st.markdown("### 📊 分析サマリー")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.metric("文字数", len(text))
+
+with col2:
+    st.metric("特徴語数", x.nnz)
+
+# =========================
+# 特徴語表示
+# =========================
+
+feature_names = vectorizer.get_feature_names_out()
+
+indices = x.nonzero()[1]
+
+detected_words = [
+    feature_names[i]
+    for i in indices
+]
+
+st.markdown("### 🔍 検出特徴語")
+
+if len(detected_words) > 0:
+
+    st.write(
+        ", ".join(
+            detected_words[:20]
+        )
+    )
+
+else:
+
+    st.write(
+        "特徴語が検出されませんでした"
+    )
+
         # コメント
         if result == "False":
             st.error(
