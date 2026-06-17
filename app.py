@@ -46,15 +46,15 @@ text = ""
 if mode == "テキスト入力":
 
     text = st.text_area(
-    "ニュース記事やSNS投稿を入力してください",
-    height=250
-)
+        "ニュース記事やSNS投稿を入力してください",
+        height=250
+    )
 
 else:
 
-url = st.text_input(
-    "記事URLを入力してください"
-)
+    url = st.text_input(
+        "記事URLを入力してください"
+    )
 
 if url:
 
