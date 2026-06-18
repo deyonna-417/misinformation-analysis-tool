@@ -65,22 +65,22 @@ if mode == "テキスト入力":
 
 else:
 
-url = st.text_input(
+    url = st.text_input(
     "記事URLを入力してください"
-)
+    )
 
-if url:
+    if url:
 
-    try:
+        try:
 
-        response = requests.get(
-            url,
-            timeout=10,
-            headers={
-                "User-Agent":
+            response = requests.get(
+                url,
+                timeout=10,
+                headers={
+                    "User-Agent":
                 "Mozilla/5.0"
-            }
-        )
+                }
+            )
 
         soup = BeautifulSoup(
             response.text,
