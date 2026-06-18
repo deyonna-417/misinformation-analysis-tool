@@ -5,3 +5,4 @@ joblib
 numpy
 requests
 beautifulsoup4
+plotly
