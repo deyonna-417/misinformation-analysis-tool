@@ -30,11 +30,6 @@ h1 {
     font-weight: 700;
 }
 
-/* サブタイトル */
-p {
-    text-align: center;
-}
-
 /* metricカード */
 div[data-testid="metric-container"] {
     background-color: #1c2333;
