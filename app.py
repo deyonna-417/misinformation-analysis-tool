@@ -15,6 +15,11 @@ vectorizer = joblib.load("vectorizer.joblib")
 # =========================
 
 st.set_page_config(
+    page_title="Misinformation Analysis System",
+    page_icon="🛡️",
+    layout="centered"
+)
+
 st.markdown("""
 <style>
 
@@ -54,11 +59,6 @@ div[data-testid="metric-container"] {
 
 </style>
 """, unsafe_allow_html=True)
-    
-    page_title="Misinformation Analysis System",
-    page_icon="🛡️",
-    layout="centered"
-)
 
 st.markdown(
     "<h1>Misinformation Analysis System</h1>",
