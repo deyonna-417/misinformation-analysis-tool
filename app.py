@@ -52,10 +52,10 @@ url = ""
 
 if mode == "テキスト入力":
 
-text = st.text_area(
-    "ニュース記事やSNS投稿を入力してください",
-    height=250
-)
+    text = st.text_area(
+        "ニュース記事やSNS投稿を入力してください",
+        height=250
+    )
 
 # =========================
 
@@ -151,7 +151,6 @@ if st.button(
 type="primary"
 ):
 
-```
 if text.strip() == "":
 
     st.warning(
