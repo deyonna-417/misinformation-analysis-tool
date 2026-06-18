@@ -71,10 +71,10 @@ if url:
             "html.parser"
         )
 
-        text = soup.get_text(
-            " ",
-            strip=True
-        )
+        for script in soup(["script", "style", "nav", "footer"]):
+            script.decompose()
+
+        text = soup.get_text(" ", strip=True)
 
         st.success("記事を取得しました")
 
