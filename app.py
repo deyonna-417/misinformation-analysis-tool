@@ -160,19 +160,6 @@ if st.button(
             f"{icon} 判定結果 : {result}"
         )
 
-        st.metric(
-            "危険度スコア",
-            f"{fake_prob:.2f}%"
-        )
-
-        st.progress(
-            fake_prob / 100
-        )
-
-        # =====================
-        # 確率表示
-        # =====================
-
         col1, col2 = st.columns(2)
 
         with col1:
@@ -188,6 +175,20 @@ if st.button(
                 "正情報確率",
                 f"{true_prob:.2f}%"
             )
+
+        # =====================
+        # AI判定メーター
+        # =====================
+
+        st.markdown("### 📈 AI判定メーター")
+
+        st.progress(
+            true_prob / 100
+        )
+
+        st.write(
+            f"信頼度 : {true_prob:.2f}%"
+        )
 
         # =====================
         # 分析サマリー
@@ -262,12 +263,8 @@ if st.button(
             )
 
         # =====================
-        # AIコメント
+        # 判定コメント
         # =====================
-
-        st.markdown(
-            "### 📝 AI分析コメント"
-        )
 
         if result == "False":
 
