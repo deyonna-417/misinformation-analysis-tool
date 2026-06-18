@@ -236,9 +236,53 @@ if st.button(
                 f"🔴 AI信頼度 : {true_prob:.2f}%"
             )
 
-        st.markdown("### 📈 信頼度")
+        # =====================
+        # 信頼度メーター
+        # =====================
 
-        st.progress(true_prob / 100)
+st.markdown(f"""
+<div style="
+background:#1c2333;
+padding:25px;
+border-radius:20px;
+border:2px solid #4F8BF9;
+text-align:center;
+">
+
+<h3>AI信頼度メーター</h3>
+
+<div style="
+font-size:60px;
+font-weight:bold;
+color:#00ff88;
+">
+{true_prob:.1f}%
+</div>
+
+<div style="
+width:100%;
+height:20px;
+background:#333;
+border-radius:20px;
+overflow:hidden;
+">
+
+<div style="
+width:{true_prob}%;
+height:20px;
+background:linear-gradient(
+90deg,
+#ff4444,
+#ffaa00,
+#00ff88
+);
+">
+</div>
+
+</div>
+
+</div>
+""", unsafe_allow_html=True)
 
         # =====================
         # 分析サマリー
