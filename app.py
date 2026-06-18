@@ -15,12 +15,55 @@ vectorizer = joblib.load("vectorizer.joblib")
 # =========================
 
 st.set_page_config(
+st.markdown("""
+<style>
+
+/* タイトル */
+h1 {
+    text-align: center;
+    color: #4F8BF9;
+    font-weight: 700;
+}
+
+/* サブタイトル */
+p {
+    text-align: center;
+}
+
+/* metricカード */
+div[data-testid="metric-container"] {
+    background-color: #1c2333;
+    border: 1px solid #4F8BF9;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+/* ボタン */
+.stButton > button {
+    width: 100%;
+    border-radius: 12px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* プログレスバー */
+.stProgress > div > div > div > div {
+    background-color: #4F8BF9;
+}
+
+</style>
+""", unsafe_allow_html=True)
+    
     page_title="Misinformation Analysis System",
     page_icon="🛡️",
     layout="centered"
 )
 
-st.title("Misinformation Analysis System")
+st.markdown(
+    "<h1>Misinformation Analysis System</h1>",
+    unsafe_allow_html=True
+)
 
 st.caption(
     "AIによる誤情報拡散パターン分析システム"
@@ -186,9 +229,23 @@ if st.button(
             true_prob / 100
         )
 
-        st.write(
-            f"信頼度 : {true_prob:.2f}%"
-        )
+        if true_prob >= 80:
+
+            st.success(
+                f"🟢 AI信頼度 : {true_prob:.2f}%"
+            )
+
+        elif true_prob >= 60:
+
+            st.warning(
+                f"🟡 AI信頼度 : {true_prob:.2f}%"
+            )
+
+        else:
+
+            st.error(
+                f"🔴 AI信頼度 : {true_prob:.2f}%"
+            )
 
         # =====================
         # 分析サマリー
