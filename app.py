@@ -218,12 +218,6 @@ if st.button(
         # AI判定メーター
         # =====================
 
-        st.markdown("### 📈 AI判定メーター")
-
-        st.progress(
-            true_prob / 100
-        )
-
         if true_prob >= 80:
 
             st.success(
