@@ -238,58 +238,58 @@ if st.button(
             )
 
         # =====================
-# AI信頼度メーター
-# =====================
-
-fig = go.Figure(
-    go.Indicator(
-        mode="gauge+number",
-        value=true_prob,
-        title={
-            "text": "AI信頼度"
-        },
-        number={
-            "suffix": "%"
-        },
-        gauge={
-            "axis": {
-                "range": [0, 100]
-            },
-            "bar": {
-                "color": "#4F8BF9"
-            },
-            "steps": [
-                {
-                    "range": [0, 50],
-                    "color": "#ff4d4d"
+        # AI信頼度メーター
+        # =====================
+        
+        fig = go.Figure(
+            go.Indicator(
+                mode="gauge+number",
+                value=true_prob,
+                title={
+                    "text": "AI信頼度"
                 },
-                {
-                    "range": [50, 75],
-                    "color": "#ffaa00"
+                number={
+                    "suffix": "%"
                 },
-                {
-                    "range": [75, 100],
-                    "color": "#00cc66"
+                gauge={
+                    "axis": {
+                        "range": [0, 100]
+                    },
+                    "bar": {
+                        "color": "#4F8BF9"
+                    },
+                    "steps": [
+                        {
+                            "range": [0, 50],
+                            "color": "#ff4d4d"
+                        },
+                        {
+                            "range": [50, 75],
+                            "color": "#ffaa00"
+                        },
+                        {
+                            "range": [75, 100],
+                            "color": "#00cc66"
+                        }
+                    ]
                 }
-            ]
-        }
-    )
-)
-
-fig.update_layout(
-    height=350,
-    margin=dict(
-        l=20,
-        r=20,
-        t=50,
-        b=20
-    )
-)
-
-st.plotly_chart(
-    fig,
-    use_container_width=True
-)
+            )
+        )
+        
+        fig.update_layout(
+            height=350,
+            margin=dict(
+                l=20,
+                r=20,
+                t=50,
+                b=20
+            )
+        )
+        
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
 
         # =====================
         # 分析サマリー
