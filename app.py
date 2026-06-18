@@ -11,18 +11,19 @@ model = joblib.load("classifier.joblib")
 vectorizer = joblib.load("vectorizer.joblib")
 
 # =========================
-# 画面
+# 画面設定
 # =========================
 
 st.set_page_config(
-    page_title="誤情報拡散パターン分析ツール",
-    page_icon="🔍"
+    page_title="Misinformation Analysis System",
+    page_icon="🛡️",
+    layout="centered"
 )
 
-st.title("🔍 誤情報拡散パターン分析ツール")
+st.title("Misinformation Analysis System")
 
-st.write(
-    "ニュース記事またはURLを入力してください"
+st.caption(
+    "AI-Based Misinformation Pattern Detection"
 )
 
 # =========================
@@ -30,8 +31,8 @@ st.write(
 # =========================
 
 mode = st.radio(
-    "入力方法",
-    ["テキスト入力", "URL入力"]
+    "Input Type",
+    ["Text", "URL"]
 )
 
 text = ""
@@ -41,10 +42,10 @@ url = ""
 # テキスト入力
 # =========================
 
-if mode == "テキスト入力":
+if mode == "Text":
 
     text = st.text_area(
-        "入力欄",
+        "Input Text",
         height=250
     )
 
@@ -55,7 +56,7 @@ if mode == "テキスト入力":
 else:
 
     url = st.text_input(
-        "記事URL"
+        "Article URL"
     )
 
     if url:
@@ -81,15 +82,15 @@ else:
             )
 
             st.success(
-                "記事取得成功"
+                "Article retrieved successfully"
             )
 
             with st.expander(
-                "取得テキスト確認"
+                "Preview Extracted Text"
             ):
 
                 st.text_area(
-                    "先頭1000文字",
+                    "First 1000 Characters",
                     text[:1000],
                     height=200
                 )
@@ -97,29 +98,44 @@ else:
         except Exception as e:
 
             st.error(
-                f"取得失敗: {e}"
+                f"Failed to retrieve article: {e}"
             )
 
 # =========================
-# 分析
+# 分析開始
 # =========================
 
-if st.button("分析開始"):
+if st.button(
+    "Analyze",
+    type="primary"
+):
 
     if text.strip() == "":
 
         st.warning(
-            "文章またはURLを入力してください"
+            "Please enter text or URL."
         )
 
     else:
 
-        x = vectorizer.transform([text])
+        with st.spinner(
+            "Analyzing..."
+        ):
 
-        prob = model.predict_proba(x)[0]
+            x = vectorizer.transform(
+                [text]
+            )
 
-        fake_prob = prob[0] * 100
-        true_prob = prob[1] * 100
+            prob = model.predict_proba(
+                x
+            )[0]
+
+            fake_prob = prob[0] * 100
+            true_prob = prob[1] * 100
+
+        # =====================
+        # 判定
+        # =====================
 
         if fake_prob >= 75:
 
@@ -136,47 +152,64 @@ if st.button("分析開始"):
             result = "True"
             icon = "🟢"
 
+        # =====================
+        # 結果表示
+        # =====================
+
         st.subheader(
-            f"{icon} 判定結果: {result}"
+            f"{icon} Analysis Result : {result}"
         )
 
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.metric(
-                "誤情報確率",
-                f"{fake_prob:.2f}%"
-            )
-
-        with col2:
-            st.metric(
-                "正情報確率",
-                f"{true_prob:.2f}%"
-            )
+        st.metric(
+            "Risk Score",
+            f"{fake_prob:.2f}%"
+        )
 
         st.progress(
             fake_prob / 100
         )
 
         # =====================
+        # 確率表示
+        # =====================
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                "Misinformation Probability",
+                f"{fake_prob:.2f}%"
+            )
+
+        with col2:
+
+            st.metric(
+                "Reliable Information Probability",
+                f"{true_prob:.2f}%"
+            )
+
+        # =====================
         # 分析サマリー
         # =====================
 
         st.markdown(
-            "### 📊 分析サマリー"
+            "### 📊 Analysis Summary"
         )
 
         col3, col4 = st.columns(2)
 
         with col3:
+
             st.metric(
-                "文字数",
+                "Characters",
                 len(text)
             )
 
         with col4:
+
             st.metric(
-                "特徴語数",
+                "Detected Features",
                 x.nnz
             )
 
@@ -184,11 +217,15 @@ if st.button("分析開始"):
         # 特徴語
         # =====================
 
-        feature_names = vectorizer.get_feature_names_out()
+        feature_names = (
+            vectorizer.get_feature_names_out()
+        )
 
         scores = x.toarray()[0]
 
-        top_indices = scores.argsort()[-20:][::-1]
+        top_indices = (
+            scores.argsort()[-20:][::-1]
+        )
 
         important_words = []
 
@@ -207,30 +244,48 @@ if st.button("分析開始"):
                     )
 
         st.markdown(
-            "### 🔍 検出特徴語"
+            "### 🔍 Detected Keywords"
         )
 
         if important_words:
 
             for word in important_words:
-                st.write(f"• {word}")
+
+                st.write(
+                    f"• {word}"
+                )
 
         else:
 
             st.write(
-                "特徴語が検出されませんでした"
+                "No significant keywords detected."
             )
 
-import pandas as pd
+        # =====================
+        # コメント
+        # =====================
 
-chart_df = pd.DataFrame({
-    "項目": ["誤情報", "正情報"],
-    "確率": [fake_prob, true_prob]
-})
+        st.markdown(
+            "### 📝 AI Comment"
+        )
 
-st.bar_chart(
-    chart_df.set_index("項目")
-)
+        if result == "False":
+
+            st.error(
+                "Patterns commonly observed in misinformation-related articles were detected."
+            )
+
+        elif result == "Caution":
+
+            st.warning(
+                "This information is difficult to classify. Cross-checking with multiple sources is recommended."
+            )
+
+        else:
+
+            st.success(
+                "The article shows characteristics similar to general news content."
+            )
 
 # =========================
 # フッター
@@ -239,5 +294,6 @@ st.bar_chart(
 st.markdown("---")
 
 st.caption(
-    "本システムは研究・学習目的で作成されています。"
+    "This system is developed for educational and research purposes. "
+    "Analysis results are provided as reference information only."
 )
