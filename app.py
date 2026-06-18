@@ -236,6 +236,10 @@ if st.button(
                 f"🔴 AI信頼度 : {true_prob:.2f}%"
             )
 
+        st.markdown("### 📈 信頼度")
+
+        st.progress(true_prob / 100)
+
         # =====================
         # 分析サマリー
         # =====================
