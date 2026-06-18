@@ -221,6 +221,17 @@ if st.button("分析開始"):
                 "特徴語が検出されませんでした"
             )
 
+import pandas as pd
+
+chart_df = pd.DataFrame({
+    "項目": ["誤情報", "正情報"],
+    "確率": [fake_prob, true_prob]
+})
+
+st.bar_chart(
+    chart_df.set_index("項目")
+)
+
 # =========================
 # フッター
 # =========================
