@@ -23,7 +23,7 @@ st.set_page_config(
 st.title("Misinformation Analysis System")
 
 st.caption(
-    "AI-Based Misinformation Pattern Detection"
+    "AIによる誤情報拡散パターン分析システム"
 )
 
 # =========================
@@ -31,8 +31,8 @@ st.caption(
 # =========================
 
 mode = st.radio(
-    "Input Type",
-    ["Text", "URL"]
+    "入力方法",
+    ["テキスト入力", "URL入力"]
 )
 
 text = ""
@@ -42,10 +42,10 @@ url = ""
 # テキスト入力
 # =========================
 
-if mode == "Text":
+if mode == "テキスト入力":
 
     text = st.text_area(
-        "Input Text",
+        "ニュース記事やSNS投稿を入力してください",
         height=250
     )
 
@@ -56,7 +56,7 @@ if mode == "Text":
 else:
 
     url = st.text_input(
-        "Article URL"
+        "記事URL"
     )
 
     if url:
@@ -82,15 +82,15 @@ else:
             )
 
             st.success(
-                "Article retrieved successfully"
+                "記事を取得しました"
             )
 
             with st.expander(
-                "Preview Extracted Text"
+                "取得テキスト確認"
             ):
 
                 st.text_area(
-                    "First 1000 Characters",
+                    "先頭1000文字",
                     text[:1000],
                     height=200
                 )
@@ -98,7 +98,7 @@ else:
         except Exception as e:
 
             st.error(
-                f"Failed to retrieve article: {e}"
+                f"記事取得に失敗しました: {e}"
             )
 
 # =========================
@@ -106,20 +106,20 @@ else:
 # =========================
 
 if st.button(
-    "Analyze",
+    "分析開始",
     type="primary"
 ):
 
     if text.strip() == "":
 
         st.warning(
-            "Please enter text or URL."
+            "文章またはURLを入力してください"
         )
 
     else:
 
         with st.spinner(
-            "Analyzing..."
+            "AIが分析中です..."
         ):
 
             x = vectorizer.transform(
@@ -153,15 +153,15 @@ if st.button(
             icon = "🟢"
 
         # =====================
-        # 結果表示
+        # 判定結果
         # =====================
 
         st.subheader(
-            f"{icon} Analysis Result : {result}"
+            f"{icon} 判定結果 : {result}"
         )
 
         st.metric(
-            "Risk Score",
+            "危険度スコア",
             f"{fake_prob:.2f}%"
         )
 
@@ -178,14 +178,14 @@ if st.button(
         with col1:
 
             st.metric(
-                "Misinformation Probability",
+                "誤情報確率",
                 f"{fake_prob:.2f}%"
             )
 
         with col2:
 
             st.metric(
-                "Reliable Information Probability",
+                "正情報確率",
                 f"{true_prob:.2f}%"
             )
 
@@ -194,7 +194,7 @@ if st.button(
         # =====================
 
         st.markdown(
-            "### 📊 Analysis Summary"
+            "### 📊 分析サマリー"
         )
 
         col3, col4 = st.columns(2)
@@ -202,14 +202,14 @@ if st.button(
         with col3:
 
             st.metric(
-                "Characters",
+                "文字数",
                 len(text)
             )
 
         with col4:
 
             st.metric(
-                "Detected Features",
+                "特徴語数",
                 x.nnz
             )
 
@@ -244,7 +244,7 @@ if st.button(
                     )
 
         st.markdown(
-            "### 🔍 Detected Keywords"
+            "### 🔍 検出特徴語"
         )
 
         if important_words:
@@ -258,33 +258,33 @@ if st.button(
         else:
 
             st.write(
-                "No significant keywords detected."
+                "特徴語が検出されませんでした"
             )
 
         # =====================
-        # コメント
+        # AIコメント
         # =====================
 
         st.markdown(
-            "### 📝 AI Comment"
+            "### 📝 AI分析コメント"
         )
 
         if result == "False":
 
             st.error(
-                "Patterns commonly observed in misinformation-related articles were detected."
+                "誤情報記事に多く見られる特徴が検出されました。"
             )
 
         elif result == "Caution":
 
             st.warning(
-                "This information is difficult to classify. Cross-checking with multiple sources is recommended."
+                "判定が難しい記事です。複数の情報源で確認することを推奨します。"
             )
 
         else:
 
             st.success(
-                "The article shows characteristics similar to general news content."
+                "一般的なニュース記事に近い特徴が検出されました。"
             )
 
 # =========================
@@ -294,6 +294,5 @@ if st.button(
 st.markdown("---")
 
 st.caption(
-    "This system is developed for educational and research purposes. "
-    "Analysis results are provided as reference information only."
+    "本システムは研究・学習目的で開発されています。判定結果は参考情報です。"
 )
