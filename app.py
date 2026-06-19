@@ -179,18 +179,18 @@ if st.button(
         if fake_prob >= 75:
 
             result = "False"
-            icon = "🔴"
-
+            result_color = "#EF4444"
+        
         elif fake_prob >= 50:
-
+        
             result = "Caution"
-            icon = "🟡"
-
+            result_color = "#F59E0B"
+        
         else:
-
+        
             result = "True"
-            icon = "🟢"
-
+            result_color = "#22C55E"
+    
         # =====================
         # 判定結果
         # =====================
@@ -207,12 +207,14 @@ if st.button(
         text-align:center;
         font-size:48px;
         font-weight:bold;
-        color:#FFFFFF;
-        text-shadow:0 0 10px rgba(255,255,255,0.3);
+        color:{result_color};
+        text-shadow:0 0 15px {result_color};
         ">
         {result}
         </div>
         """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
         
         # =====================
         # AI信頼度メーター
@@ -223,7 +225,7 @@ if st.button(
                 mode="gauge+number",
                 value=true_prob,
                 title={
-                    "text": "AI Reliability"
+                    "text": "判定信頼度"
                 },
                 number={
                     "suffix": "%"
