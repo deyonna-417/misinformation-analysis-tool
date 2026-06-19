@@ -61,8 +61,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.caption(
-    "AIによる誤情報拡散パターン分析システム"
+st.markdown(
+    """
+    <div style="
+    text-align:center;
+    color:#94A3B8;
+    font-size:18px;
+    margin-top:-10px;
+    margin-bottom:20px;
+    ">
+    AIによる誤情報拡散パターン分析システム
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
 # =========================
