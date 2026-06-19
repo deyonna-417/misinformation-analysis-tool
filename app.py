@@ -91,7 +91,7 @@ url = ""
 # URL入力
 # =========================
 
-    url = st.text_input(
+url = st.text_input(
         "ニュース記事URLを入力してください"
     )
 
