@@ -241,40 +241,20 @@ if st.button(
         # AI信頼度メーター
         # =====================
         
-        fig = go.Figure(
-            go.Indicator(
-                mode="gauge+number",
-                value=true_prob,
-                title={
-                    "text": "AI信頼度"
-                },
-                number={
-                    "suffix": "%"
-                },
-                gauge={
-                    "axis": {
-                        "range": [0, 100]
-                    },
-                    "bar": {
-                        "color": "#4F8BF9"
-                    },
-                    "steps": [
-                        {
-                            "range": [0, 50],
-                            "color": "#ff4d4d"
-                        },
-                        {
-                            "range": [50, 75],
-                            "color": "#ffaa00"
-                        },
-                        {
-                            "range": [75, 100],
-                            "color": "#00cc66"
-                        }
-                    ]
-                }
-            )
-        )
+        "steps": [
+            {
+                "range": [0, 50],
+                "color": "#1f2937"
+            },
+            {
+                "range": [50, 75],
+                "color": "#334155"
+            },
+            {
+                "range": [75, 100],
+                "color": "#4F8BF9"
+            }
+        ]
         
         fig.update_layout(
             height=350,
