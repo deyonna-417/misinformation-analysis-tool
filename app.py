@@ -213,22 +213,7 @@ if st.button(
         {icon} {result}
         </div>
         """, unsafe_allow_html=True)
-        col1, col2 = st.columns(2)
-
-        with col1:
-
-            st.metric(
-                "誤情報確率",
-                f"{fake_prob:.2f}%"
-            )
-
-        with col2:
-
-            st.metric(
-                "正情報確率",
-                f"{true_prob:.2f}%"
-            )
-
+       
         # =====================
         # AI判定メーター
         # =====================
@@ -318,7 +303,7 @@ if st.button(
         # =====================
 
         st.markdown(
-            "### 📊 分析サマリー"
+            "### 分析サマリー"
         )
 
         col3, col4 = st.columns(2)
@@ -368,7 +353,7 @@ if st.button(
                     )
 
         st.markdown(
-            "### 🔍 検出特徴語"
+            "### 検出特徴語"
         )
 
         if important_words:
