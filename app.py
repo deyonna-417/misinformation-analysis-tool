@@ -195,10 +195,24 @@ if st.button(
         # 判定結果
         # =====================
 
-        st.subheader(
-            f"{icon} 判定結果 : {result}"
-        )
-
+        st.markdown(f"""
+        <div style="
+        background:linear-gradient(
+        145deg,
+        #1e293b,
+        #0f172a
+        );
+        padding:20px;
+        border-radius:20px;
+        text-align:center;
+        font-size:36px;
+        font-weight:bold;
+        box-shadow:0 8px 20px rgba(0,0,0,0.35);
+        border:1px solid #334155;
+        ">
+        {icon} {result}
+        </div>
+        """, unsafe_allow_html=True)
         col1, col2 = st.columns(2)
 
         with col1:
@@ -245,15 +259,27 @@ if st.button(
             go.Indicator(
                 mode="gauge+number",
                 value=true_prob,
-                title={"text": "AI信頼度"},
-                number={"suffix": "%"},
+                title={
+                    "text": "AI Reliability"
+                },
+                number={
+                    "suffix": "%"
+                },
                 gauge={
-                    "axis": {"range": [0, 100]},
-                    "bar": {"color": "#60A5FA"},
+                    "axis": {
+                        "range": [0, 100]
+                    },
+                    "bar": {
+                        "color": "#60A5FA",
+                        "thickness": 0.3
+                    },
+                    "bgcolor": "#0f172a",
+                    "borderwidth": 2,
+                    "bordercolor": "#334155",
                     "steps": [
                         {
                             "range": [0, 50],
-                            "color": "#1f2937"
+                            "color": "#1e293b"
                         },
                         {
                             "range": [50, 75],
@@ -261,7 +287,7 @@ if st.button(
                         },
                         {
                             "range": [75, 100],
-                            "color": "#4F8BF9"
+                            "color": "#475569"
                         }
                     ]
                 }
@@ -269,11 +295,15 @@ if st.button(
         )
         
         fig.update_layout(
-            height=350,
+            height=320,
+            paper_bgcolor="#111827",
+            font={
+                "color": "white"
+            },
             margin=dict(
                 l=20,
                 r=20,
-                t=50,
+                t=60,
                 b=20
             )
         )
