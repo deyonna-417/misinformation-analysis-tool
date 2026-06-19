@@ -202,40 +202,18 @@ if st.button(
         #1e293b,
         #0f172a
         );
-        padding:20px;
+        padding:25px;
         border-radius:20px;
         text-align:center;
-        font-size:36px;
+        font-size:48px;
         font-weight:bold;
-        box-shadow:0 8px 20px rgba(0,0,0,0.35);
-        border:1px solid #334155;
+        color:#FFFFFF;
+        text-shadow:0 0 10px rgba(255,255,255,0.3);
         ">
         {result}
         </div>
         """, unsafe_allow_html=True)
-       
-        # =====================
-        # AI判定メーター
-        # =====================
-
-        if true_prob >= 80:
-
-            st.success(
-                f"🟢 AI信頼度 : {true_prob:.2f}%"
-            )
-
-        elif true_prob >= 60:
-
-            st.warning(
-                f"🟡 AI信頼度 : {true_prob:.2f}%"
-            )
-
-        else:
-
-            st.error(
-                f"🔴 AI信頼度 : {true_prob:.2f}%"
-            )
-
+        
         # =====================
         # AI信頼度メーター
         # =====================
