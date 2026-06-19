@@ -84,11 +84,11 @@ url = ""
 
 url = st.text_input(
         "ニュース記事URLを入力してください"
-    )
+)
 
-    if url:
+if url:
 
-        try:
+    try:
 
             response = requests.get(
                 url,
