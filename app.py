@@ -210,7 +210,7 @@ if st.button(
         box-shadow:0 8px 20px rgba(0,0,0,0.35);
         border:1px solid #334155;
         ">
-        {icon} {result}
+        {result}
         </div>
         """, unsafe_allow_html=True)
        
