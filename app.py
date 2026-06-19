@@ -76,76 +76,57 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-mode = st.radio(
-    "入力方法",
-    ["テキスト入力", "URL入力"]
-)
-
-text = ""
 url = ""
-
-# =========================
-# テキスト入力
-# =========================
-
-if mode == "テキスト入力":
-
-    text = st.text_area(
-        "ニュース記事やSNS投稿を入力してください",
-        height=250
-    )
 
 # =========================
 # URL入力
 # =========================
 
-else:
-
-    url = st.text_input(
+url = st.text_input(
         "ニュース記事URLを入力してください"
-    )
+)
 
-    if url:
+if url:
 
-        try:
+    try:
 
-            response = requests.get(
-                url,
-                timeout=10,
-                headers={
-                    "User-Agent": "Mozilla/5.0"
-                }
+        response = requests.get(
+            url,
+            timeout=10,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            }
+        )
+
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser"
+        )
+
+        text = soup.get_text(
+            " ",
+            strip=True
+        )
+
+        st.success(
+            "記事を取得しました"
+        )
+
+        with st.expander(
+            "取得テキスト確認"
+        ):
+
+            st.text_area(
+                "先頭1000文字",
+                text[:1000],
+                height=200
             )
 
-            soup = BeautifulSoup(
-                response.text,
-                "html.parser"
-            )
+    except Exception as e:
 
-            text = soup.get_text(
-                " ",
-                strip=True
-            )
-
-            st.success(
-                "記事を取得しました"
-            )
-
-            with st.expander(
-                "取得テキスト確認"
-            ):
-
-                st.text_area(
-                    "先頭1000文字",
-                    text[:1000],
-                    height=200
-                )
-
-        except Exception as e:
-
-            st.error(
-                f"記事取得に失敗しました: {e}"
-            )
+        st.error(
+            f"記事取得に失敗しました: {e}"
+        )
                                                                                               
 # =========================
 # 分析開始
