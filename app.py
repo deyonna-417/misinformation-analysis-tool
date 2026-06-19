@@ -109,18 +109,6 @@ else:
 
         try:
 
-# =========================
-# URL入力
-# =========================
-
-url = st.text_input(
-        "ニュース記事URLを入力してください"
-)
-
-if url:
-
-    try:
-
         response = requests.get(
             url,
             timeout=10,
