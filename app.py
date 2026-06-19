@@ -109,43 +109,43 @@ else:
 
         try:
 
-        response = requests.get(
-            url,
-            timeout=10,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            }
-        )
-
-        soup = BeautifulSoup(
-            response.text,
-            "html.parser"
-        )
-
-        text = soup.get_text(
-            " ",
-            strip=True
-        )
-
-        st.success(
-            "記事を取得しました"
-        )
-
-        with st.expander(
-            "取得テキスト確認"
-        ):
-
-            st.text_area(
-                "先頭1000文字",
-                text[:1000],
-                height=200
+            response = requests.get(
+                url,
+                timeout=10,
+                headers={
+                    "User-Agent": "Mozilla/5.0"
+                }
             )
 
-    except Exception as e:
+            soup = BeautifulSoup(
+                response.text,
+                "html.parser"
+            )
 
-        st.error(
-            f"記事取得に失敗しました: {e}"
-        )
+            text = soup.get_text(
+                " ",
+                strip=True
+            )
+
+            st.success(
+                "記事を取得しました"
+            )
+
+            with st.expander(
+                "取得テキスト確認"
+            ):
+
+                st.text_area(
+                    "先頭1000文字",
+                    text[:1000],
+                    height=200
+                )
+
+        except Exception as e:
+
+            st.error(
+                f"記事取得に失敗しました: {e}"
+            )
                                                                                               
 # =========================
 # 分析開始
