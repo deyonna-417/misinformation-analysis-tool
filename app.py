@@ -1,18 +1,28 @@
 from urllib.parse import urlparse
-
-# =========================
-# URLチェック
-# =========================
-
-def is_valid_url(url):
-    parsed = urlparse(url)
-    return parsed.scheme in ("http", "https") and parsed.netloc != ""
-    
 import plotly.graph_objects as go
 import streamlit as st
 import joblib
 import requests
 from bs4 import BeautifulSoup
+
+# =========================
+# セキュリティ設定
+# =========================
+
+ALLOWED_DOMAINS = [
+    "nhk.or.jp",
+    "factcheckcenter.jp",
+    "reuters.com",
+    "bbc.com",
+    "cnn.com"
+]
+
+def is_valid_url(url):
+    parsed = urlparse(url)
+    return (
+        parsed.scheme in ("http", "https")
+        and parsed.netloc != ""
+    )
 
 # =========================
 # モデル読み込み
@@ -93,16 +103,37 @@ url = ""
 # =========================
 
 url = st.text_input(
-        "ニュース記事URLを入力してください"
+    "ニュース記事URLを入力してください"
 )
 
+text = ""
+
 if url:
 
+    # -------------------------
+    # URL形式チェック
+    # -------------------------
     if not is_valid_url(url):
-        st.error("URL形式が正しくありません。")
+        st.error("❌ URL形式が正しくありません。")
         st.stop()
 
-if url:
+    # -------------------------
+    # HTTPSチェック
+    # -------------------------
+    if url.startswith("https://"):
+        st.success("🔒 HTTPS通信を確認しました。")
+    else:
+        st.warning("⚠ HTTPSではありません。通信の安全性に注意してください。")
+
+    # -------------------------
+    # ホワイトリストチェック
+    # -------------------------
+    domain = urlparse(url).netloc.lower()
+
+    if any(site in domain for site in ALLOWED_DOMAINS):
+        st.info("✅ 信頼済みニュースサイトです。")
+    else:
+        st.warning("⚠ 登録されていないニュースサイトです。")
 
     try:
 
@@ -114,35 +145,38 @@ if url:
             }
         )
 
+        response.raise_for_status()
+
         soup = BeautifulSoup(
             response.text,
             "html.parser"
         )
 
-        for tag in soup(
-            [
+        # -------------------------
+        # HTMLタグ除去
+        # -------------------------
+        for tag in soup([
             "script",
             "style",
             "iframe",
             "noscript"
-            ]
-        ):
+        ]):
             tag.decompose()
-    
+
         text = soup.get_text(
             " ",
             strip=True
         )
 
-if len(text) < 300:
-
-    st.error(
-        "記事本文が短いため分析できません。"
-    )
-    st.stop()
+        # -------------------------
+        # 文字数チェック
+        # -------------------------
+        if len(text) < 300:
+            st.error("記事本文が短いため分析できません。")
+            st.stop()
 
         st.success(
-            "記事を取得しました"
+            "記事を取得しました。"
         )
 
         with st.expander(
@@ -155,10 +189,16 @@ if len(text) < 300:
                 height=200
             )
 
+    except requests.exceptions.RequestException as e:
+
+        st.error(
+            f"通信エラー：{e}"
+        )
+
     except Exception as e:
 
         st.error(
-            f"記事取得に失敗しました: {e}"
+            f"記事取得に失敗しました：{e}"
         )
                                                                                               
 # =========================
