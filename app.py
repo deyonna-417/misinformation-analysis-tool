@@ -1,19 +1,3 @@
-ALLOWED_DOMAINS = [
-    "nhk.or.jp",
-    "factcheckcenter.jp",
-    "reuters.com",
-    "cnn.com",
-    "bbc.com"
-]
-
-domain = urlparse(url).netloc.lower()
-
-if not any(site in domain for site in ALLOWED_DOMAINS):
-
-    st.warning(
-        "登録されていないニュースサイトです。分析結果は参考値になります。"
-    )
-    
 from urllib.parse import urlparse
 
 # =========================
