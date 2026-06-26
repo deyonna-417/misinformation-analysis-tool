@@ -136,14 +136,14 @@ if url:
         )
 
         for tag in soup(
-    [
-        "script",
-        "style",
-        "iframe",
-        "noscript"
-    ]
-):
-    tag.decompose()
+            [
+            "script",
+            "style",
+            "iframe",
+            "noscript"
+            ]
+        ):
+            tag.decompose()
     
         text = soup.get_text(
             " ",
