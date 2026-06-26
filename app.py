@@ -216,22 +216,22 @@ if st.button(
 
     if text.strip() == "":
 
-    if len(text) > 50000:
+        st.warning(
+            "文章またはURLを入力してください"
+        )
+
+    elif len(text) > 50000:
 
         st.error(
             "記事が長すぎます。"
         )
         st.stop()
 
-        st.warning(
-            "文章またはURLを入力してください"
-        )
-
     else:
 
         with st.spinner(
             "AIが分析中です..."
-        ):
+        ): 
 
             x = vectorizer.transform(
                 [text]
