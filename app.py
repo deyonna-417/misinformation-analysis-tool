@@ -1,3 +1,29 @@
+ALLOWED_DOMAINS = [
+    "nhk.or.jp",
+    "factcheckcenter.jp",
+    "reuters.com",
+    "cnn.com",
+    "bbc.com"
+]
+
+domain = urlparse(url).netloc.lower()
+
+if not any(site in domain for site in ALLOWED_DOMAINS):
+
+    st.warning(
+        "登録されていないニュースサイトです。分析結果は参考値になります。"
+    )
+    
+from urllib.parse import urlparse
+
+# =========================
+# URLチェック
+# =========================
+
+def is_valid_url(url):
+    parsed = urlparse(url)
+    return parsed.scheme in ("http", "https") and parsed.netloc != ""
+    
 import plotly.graph_objects as go
 import streamlit as st
 import joblib
@@ -88,6 +114,12 @@ url = st.text_input(
 
 if url:
 
+    if not is_valid_url(url):
+        st.error("URL形式が正しくありません。")
+        st.stop()
+
+if url:
+
     try:
 
         response = requests.get(
@@ -103,10 +135,27 @@ if url:
             "html.parser"
         )
 
+        for tag in soup(
+    [
+        "script",
+        "style",
+        "iframe",
+        "noscript"
+    ]
+):
+    tag.decompose()
+    
         text = soup.get_text(
             " ",
             strip=True
         )
+
+if len(text) < 300:
+
+    st.error(
+        "記事本文が短いため分析できません。"
+    )
+    st.stop()
 
         st.success(
             "記事を取得しました"
