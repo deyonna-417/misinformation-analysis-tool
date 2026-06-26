@@ -11,6 +11,10 @@ from bs4 import BeautifulSoup
 
 ALLOWED_DOMAINS = [
     "nhk.or.jp",
+    "mainichi.jp",
+    "asahi.com",
+    "yomiuri.co.jp",
+    "nikkei.com",
     "factcheckcenter.jp",
     "reuters.com",
     "bbc.com",
@@ -110,6 +114,13 @@ text = ""
 
 if url:
 
+    if len(url) > 300:
+
+    st.error(
+        "URLが長すぎます。"
+    )
+    st.stop()
+
     # -------------------------
     # URL形式チェック
     # -------------------------
@@ -117,6 +128,13 @@ if url:
         st.error("❌ URL形式が正しくありません。")
         st.stop()
 
+    if "@" in url:
+
+    st.error(
+        "不正なURLです。"
+    )
+    st.stop()
+    
     # -------------------------
     # HTTPSチェック
     # -------------------------
@@ -211,6 +229,13 @@ if st.button(
 ):
 
     if text.strip() == "":
+
+    if len(text) > 50000:
+
+        st.error(
+            "記事が長すぎます。"
+        )
+        st.stop()
 
         st.warning(
             "文章またはURLを入力してください"
