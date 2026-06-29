@@ -138,7 +138,7 @@ if url:
     if any(site in domain for site in ALLOWED_DOMAINS):
         st.info("✅ 信頼済みニュースサイトです。")
     else:
-        st.warning("⚠ 登録されていないニュースサイトです。")
+        st.warning("⚠ ホワイトリストに登録されていないサイトです。分析結果は参考情報としてご利用ください。")
 
     try:
 
