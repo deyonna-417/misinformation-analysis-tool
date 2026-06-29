@@ -370,7 +370,7 @@ if st.button(
         with col4:
 
             st.metric(
-                "特徴語数",
+                "抽出特徴語数",
                 x.nnz
             )
 
