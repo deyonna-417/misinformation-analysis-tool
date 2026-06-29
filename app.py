@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 
 ALLOWED_DOMAINS = [
     "news.web.nhk"
-    "nhk.or.jp",
+    "nhk",
     "mainichi.jp",
     "asahi.com",
     "yomiuri.co.jp",
