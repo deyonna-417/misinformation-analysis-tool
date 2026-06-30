@@ -391,6 +391,13 @@ if st.button(
 
         important_words = []
 
+        STOP_WORDS = {
+            "https", "http", "www", "com",
+            "the", "for", "and", "check",
+            "video", "jfc", "afp",
+            "news", "newsweb"
+        }
+
         for idx in top_indices:
 
             if scores[idx] > 0:
@@ -400,10 +407,9 @@ if st.button(
                 if (
                     len(word) >= 3
                     and not word.isdigit()
+                    and word.lower() not in STOP_WORDS
                 ):
-                    important_words.append(
-                        word
-                    )
+                    important_words.append(word)
 
         st.markdown(
             "### 検出特徴語"
