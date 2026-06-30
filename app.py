@@ -17,8 +17,7 @@ ALLOWED_DOMAINS = [
     "nikkei.com",
     "factcheckcenter.jp",
     "reuters.com",
-    "bbc.com",
-    "cnn.com"
+    "bbc.com"
 ]
 
 def is_valid_url(url):
