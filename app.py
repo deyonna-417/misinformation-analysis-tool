@@ -150,14 +150,15 @@ if url:
 
         response.raise_for_status()
 
+        # -------------------------
+        # HTMLタグ除去
+        # -------------------------
+
         soup = BeautifulSoup(
             response.text,
             "html.parser"
         )
 
-        # -------------------------
-        # HTMLタグ除去
-        # -------------------------
         for tag in soup([
             "script",
             "style",
