@@ -295,7 +295,7 @@ if st.button(
         fig = go.Figure(
             go.Indicator(
                 mode="gauge+number",
-                value=true_prob,
+                value=fake_prob,
                 title={
                     "text": "判定信頼度"
                 },
