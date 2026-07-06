@@ -297,7 +297,7 @@ if st.button(
                 mode="gauge+number",
                 value=fake_prob,
                 title={
-                    "text": "判定信頼度"
+                    "text": "誤情報判定確率"
                 },
                 number={
                     "suffix": "%"
